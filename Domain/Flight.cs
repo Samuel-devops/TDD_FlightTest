@@ -27,5 +27,18 @@ namespace Domain
 			bookingList.Add(new Booking(passangerEmail, numberOfSeats));
 			return null;
 		}
+
+		public object? CancleBooking(string passangerEmail, int numberOfSeatsToCancle)
+		{
+			var test = bookingList.Any(booking => booking.Email == passangerEmail);
+			if (!bookingList.Any(booking => booking.Email == passangerEmail))
+			{
+				return new BookingNotFound();
+			}
+
+			RemainingNumberOfSeats += numberOfSeatsToCancle;
+
+			return null;
+		}
 	}
 }
