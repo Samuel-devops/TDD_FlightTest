@@ -30,7 +30,6 @@ namespace Domain
 
 		public object? CancleBooking(string passangerEmail, int numberOfSeatsToCancle)
 		{
-			var test = bookingList.Any(booking => booking.Email == passangerEmail);
 			if (!bookingList.Any(booking => booking.Email == passangerEmail))
 			{
 				return new BookingNotFound();
