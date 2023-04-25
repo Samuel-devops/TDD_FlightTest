@@ -5,24 +5,32 @@
 		[Fact]
 		public void Books_flights()
 		{
-			var bookingService = new BookingService();
+			var entities = new Entities();
+			var flight = new Flight(3);
+			entities.Flights.Add(flight);
+
+			var bookingService = new BookingService(entities: entities);
 
 			bookingService.Book(new BookDTO(
-				flightId: Guid.NewGuid(), passangerEmail: "test@mail.com", numberOfSeats: 2
+				flightId: flight.Id, passangerEmail: "test@mail.com", numberOfSeats: 2
 				));
 
-			bookingService.FindBookings().Should().ContainEquivalentOf(
+			bookingService.FindBookings(flight.Id).Should().ContainEquivalentOf(
 				new BookingRm(passangerEmail: "test@mail.com", numberOfSeats: 2));
 		}
 	}
 
 	public class BookingService
 	{
+		public BookingService(Entities entities)
+		{
+		}
+
 		public void Book(BookDTO bookDTO)
 		{
 		}
 
-		public IEnumerable<BookingRm> FindBookings()
+		public IEnumerable<BookingRm> FindBookings(Guid flightId)
 		{
 			return new[]
 			{
