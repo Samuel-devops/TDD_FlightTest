@@ -13,6 +13,10 @@ namespace Domain
 
 		public Guid Id { get; }
 
+		[Obsolete("Needed by EF")]
+		private Flight()
+		{ }
+
 		public Flight(int seatCapacity)
 		{
 			RemainingNumberOfSeats = seatCapacity;

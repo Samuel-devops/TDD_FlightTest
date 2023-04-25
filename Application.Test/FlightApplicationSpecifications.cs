@@ -5,7 +5,9 @@
 		[Fact]
 		public void Books_flights()
 		{
-			var entities = new Entities();
+			var entities = new Entities(new DbContextOptionsBuilder<Entities>()
+				.UseInMemoryDatabase("Flights")
+				.Options);
 			var flight = new Flight(3);
 			entities.Flights.Add(flight);
 
