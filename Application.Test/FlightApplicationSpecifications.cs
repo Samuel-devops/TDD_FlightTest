@@ -33,29 +33,34 @@ namespace Application.Test
 				new BookingRm(passangerEmail, numberOfSeats));
 		}
 
-		[Fact]
-		public void Cancels_Booking()
+		[Theory]
+		[InlineData(3, "test@mail.com", 2, 2)]
+		[InlineData(6, "first@mail.com", 5, 5)]
+		public void Cancels_Booking(int initialCapacity
+			, string passangerEmail
+			, int numberOfSeatsBook
+			, int numberOfSeatsCancels)
 		{
 			// Given
-			var flight = new Flight(3);
+			var flight = new Flight(initialCapacity);
 			entities.Flights.Add(flight);
 
 			bookingService.Book(new BookDTO(
 				flightId: flight.Id,
-				passangerEmail: "test@mail.com",
-				numberOfSeats: 2
+				passangerEmail: passangerEmail,
+				numberOfSeats: numberOfSeatsBook
 				));
 
 			// When
 			bookingService.CancleBooking(new CancelBookingDTO(
 				flightId: flight.Id,
-				passangerEmail: "test@mail.com",
-				numberOfSeats: 2
+				passangerEmail: passangerEmail,
+				numberOfSeats: numberOfSeatsCancels
 				));
 
 			// Then
 			bookingService.GetRemainingNumberOfSeatsFor(flight.Id)
-				.Should().Be(3);
+				.Should().Be(initialCapacity);
 		}
 	}
 }
